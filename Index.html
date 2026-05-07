@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AsuraGadgets — Buy. Sell. Swap. Repair.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #f5f3ef;
+      --cream: #ede9e1;
+      --accent: #c94a2b;
+      --mid: #7a7570;
+      --border: rgba(13,13,13,0.12);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4vw;
+      background: rgba(245,243,239,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--black); }
+    .nav-cta {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--black);
+      color: var(--white);
+      padding: 0.55rem 1.3rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4vw 6rem 6vw;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 1.6rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--mid);
+      max-width: 440px;
+      line-height: 1.7;
+      margin-bottom: 2.8rem;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--black); color: var(--white);
+      font-family: var(--sans); font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border: 2px solid var(--black);
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--black);
+      font-family: var(--sans); font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border: 2px solid var(--border);
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .btn-outline:hover { border-color: var(--black); transform: translateY(-2px); }
+
+    .hero-right {
+      background: var(--cream);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease both 0.3s;
+    }
+    .hero-illustration {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Decorative floating cards */
+    .float-card {
+      position: absolute;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 1.1rem 1.4rem;
+      min-width: 160px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+      animation: float 4s ease-in-out infinite;
+    }
+    .float-card .card-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.3rem;
+    }
+    .float-card .card-val {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--black);
+    }
+    .float-card .card-sub { font-size: 0.78rem; color: var(--mid); margin-top: 0.15rem; }
+    .fc1 { top: 18%; left: 8%; animation-delay: 0s; }
+    .fc2 { top: 38%; right: 10%; animation-delay: 1.2s; }
+    .fc3 { bottom: 22%; left: 14%; animation-delay: 0.6s; }
+    .dot-accent { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block; margin-right: 0.4rem; }
+    .big-number {
+      font-family: var(--serif);
+      font-size: clamp(6rem, 14vw, 16rem);
+      color: var(--cream);
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      user-select: none;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.4rem 6vw;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      overflow-x: auto;
+      background: var(--white);
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .trust-item .t-icon { font-size: 1.1rem; }
+    .trust-item .t-text { font-size: 0.8rem; font-weight: 500; color: var(--mid); letter-spacing: 0.04em; }
+
+    /* ── SERVICES ── */
+    .section { padding: 7rem 6vw; }
+    .section-header { max-width: 520px; margin-bottom: 4rem; }
+    .section-tag {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.9rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-tag::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1; letter-spacing: -0.025em;
+      margin-bottom: 0.8rem;
+    }
+    .section-desc { font-size: 1rem; color: var(--mid); font-weight: 300; line-height: 1.7; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .service-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.25s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .service-card:hover { background: var(--cream); }
+    .service-card:hover::after { width: 100%; }
+    .s-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .service-card h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.9rem; color: var(--mid); line-height: 1.65; font-weight: 300; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--cream); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 1rem; }
+    .step {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .step:last-child { border-right: none; }
+    .step-num {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .step h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.015em;
+    }
+    .step p { font-size: 0.88rem; color: var(--mid); line-height: 1.65; font-weight: 300; }
+
+    /* ── DEVICES ── */
+    .devices-section {}
+    .devices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .device-card {
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .device-card:hover {
+      border-color: var(--black);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.07);
+    }
+    .d-icon { font-size: 2.5rem; margin-bottom: 1.2rem; display: block; }
+    .device-card h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .device-card p { font-size: 0.88rem; color: var(--mid); font-weight: 300; line-height: 1.6; }
+    .device-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .tag {
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: var(--cream); color: var(--mid);
+      border: 1px solid var(--border);
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      margin: 0 6vw 7rem;
+      background: var(--black);
+      padding: 5rem 5vw;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 3rem;
+    }
+    .cta-banner h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--white);
+      letter-spacing: -0.025em;
+    }
+    .cta-banner h2 em { font-style: italic; color: var(--accent); }
+    .cta-banner p { color: rgba(245,243,239,0.55); font-size: 0.95rem; font-weight: 300; margin-top: 0.6rem; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--white); color: var(--black);
+      font-family: var(--sans); font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 1rem 2.2rem; border: 2px solid var(--white);
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-white:hover { background: var(--accent); border-color: var(--accent); color: var(--white); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--black);
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--black); }
+    footer small { font-size: 0.75rem; color: var(--mid); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 280px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--border); }
+      .devices-grid { grid-template-columns: 1fr; }
+      .cta-banner { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 5vw; }
+      .cta-banner { margin: 0 5vw 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Asura<span>Gadgets</span></a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#devices">Devices</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Phones · Laptops · Gadgets</p>
+      <h1>Buy. Sell.<br><em>Swap.</em> Repair.</h1>
+      <p class="hero-sub">Your one-stop destination for pre-owned and new tech. We buy your old devices, sell quality gadgets, and fix what's broken — fast, fair, and reliable.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">Explore Services ↓</a>
+        <a href="#contact" class="btn-outline">Get a Quote</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-illustration">
+        <span class="big-number">AG</span>
+        <div class="float-card fc1">
+          <div class="card-label"><span class="dot-accent"></span>Devices Sold</div>
+          <div class="card-val">2,400+</div>
+          <div class="card-sub">Happy customers</div>
+        </div>
+        <div class="float-card fc2">
+          <div class="card-label"><span class="dot-accent"></span>Repairs Done</div>
+          <div class="card-val">98%</div>
+          <div class="card-sub">Success rate</div>
+        </div>
+        <div class="float-card fc3">
+          <div class="card-label"><span class="dot-accent"></span>Avg. Turnaround</div>
+          <div class="card-val">24 hrs</div>
+          <div class="card-sub">For most repairs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="t-icon">✓</span><span class="t-text">Warranty on all repairs</span></div>
+    <div class="trust-item"><span class="t-icon">✓</span><span class="t-text">Instant price quotes</span></div>
+    <div class="trust-item"><span class="t-icon">✓</span><span class="t-text">Data wiped & protected</span></div>
+    <div class="trust-item"><span class="t-icon">✓</span><span class="t-text">Walk-in & mail-in accepted</span></div>
+    <div class="trust-item"><span class="t-icon">✓</span><span class="t-text">Genuine & quality parts</span></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-header reveal">
+      <p class="section-tag">What We Do</p>
+      <h2>Everything tech, under one roof</h2>
+      <p class="section-desc">Whether you're upgrading, downsizing, or dealing with a cracked screen — we've got you covered.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <span class="s-icon">🛒</span>
+        <h3>Buy Gadgets</h3>
+        <p>Browse our range of quality new and certified pre-owned phones, laptops, and accessories at honest prices.</p>
+      </div>
+      <div class="service-card">
+        <span class="s-icon">💰</span>
+        <h3>Sell Your Device</h3>
+        <p>Get fast, fair cash for your used phones and laptops. No haggling — just an honest price on the spot.</p>
+      </div>
+      <div class="service-card">
+        <span class="s-icon">🔄</span>
+        <h3>Swap & Trade</h3>
+        <p>Trade in your old device and upgrade to something better. We'll handle the valuation — simple and transparent.</p>
+      </div>
+      <div class="service-card">
+        <span class="s-icon">🔧</span>
+        <h3>Repairs</h3>
+        <p>Screen replacements, battery swaps, charging ports, software issues and more. Most repairs done same day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEVICES -->
+  <section class="section devices-section" id="devices">
+    <div class="section-header reveal">
+      <p class="section-tag">Devices We Handle</p>
+      <h2>Phones, laptops &amp; more</h2>
+      <p class="section-desc">We work with all major brands and models — if it's tech, we know it.</p>
+    </div>
+    <div class="devices-grid reveal">
+      <div class="device-card">
+        <span class="d-icon">📱</span>
+        <h3>Smartphones</h3>
+        <p>iPhones, Samsung Galaxy, Google Pixel, and more. Buy, sell, swap or fix — all brands welcome.</p>
+        <div class="device-tags">
+          <span class="tag">iPhone</span>
+          <span class="tag">Samsung</span>
+          <span class="tag">Pixel</span>
+          <span class="tag">OnePlus</span>
+          <span class="tag">+ more</span>
+        </div>
+      </div>
+      <div class="device-card">
+        <span class="d-icon">💻</span>
+        <h3>Laptops</h3>
+        <p>MacBooks, Dell, HP, Lenovo and beyond. We buy and sell pre-owned laptops and repair them too.</p>
+        <div class="device-tags">
+          <span class="tag">MacBook</span>
+          <span class="tag">Dell</span>
+          <span class="tag">HP</span>
+          <span class="tag">Lenovo</span>
+          <span class="tag">+ more</span>
+        </div>
+      </div>
+      <div class="device-card">
+        <span class="d-icon">🎧</span>
+        <h3>Accessories &amp; Gadgets</h3>
+        <p>Headphones, smartwatches, tablets, chargers, cases and all the extras you need for your tech life.</p>
+        <div class="device-tags">
+          <span class="tag">Earbuds</span>
+          <span class="tag">Watches</span>
+          <span class="tag">Tablets</span>
+          <span class="tag">Cables</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how-section" id="how">
+    <div class="section-header reveal">
+      <p class="section-tag">How It Works</p>
+      <h2>Simple. Fast. Honest.</h2>
+      <p class="section-desc">Getting a quote or a repair is easy — here's what to expect.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3>Bring it in or reach out</h3>
+        <p>Walk into our store or send us a message. Tell us about your device — what you want to do with it, or what's wrong with it.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3>Get your instant quote</h3>
+        <p>We assess the device on the spot and give you a clear, no-obligation price — whether you're selling, swapping, or getting a repair.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3>Walk away happy</h3>
+        <p>Accept the deal, complete the repair, or pick up your new gadget. Fast turnaround, guaranteed work, and no hidden fees.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner reveal" id="contact">
+    <div>
+      <h2>Ready to <em>trade up</em> or get fixed?</h2>
+      <p>Visit us in store or get in touch — we respond fast.</p>
+    </div>
+    <a href="mailto:hello@asuragadgets.com" class="btn-white">Contact Us →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">Asura<span>Gadgets</span></a>
+    <nav class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#devices">Devices</a>
+      <a href="#how">How It Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <small>© 2026 AsuraGadgets. All rights reserved.</small>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
