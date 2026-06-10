@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
 // ── CONFIG — update these ──
-const WHATSAPP = "2348000000000"; // ← Your WhatsApp number
-const ADMIN_PIN = "1234"; // ← Change this to your secret PIN
+const WHATSAPP = "2348160164718"; // ← Your WhatsApp number
+const ADMIN_PIN = "1112"; // ← Change this to your secret PIN
 
 const CONDITIONS = ["Brand New", "UK Used", "Nigerian Used", "Refurbished"];
 const CATEGORIES = ["Smartphone", "Laptop", "Tablet", "Smartwatch", "Earbuds / Headphones", "Accessory", "Other"];
